@@ -1,0 +1,4 @@
+.idea/*
+twitter.ini
+venv/*
+*.pyc
