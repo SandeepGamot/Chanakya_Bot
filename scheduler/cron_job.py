@@ -1,13 +1,18 @@
 from apscheduler.schedulers.blocking import BlockingScheduler
+import driver
+
 
 sched = BlockingScheduler()
 
 
-@sched.scheduled_job('cron', hour=12)
+@sched.scheduled_job('cron', hour=13, minute=30)
 def notify():
-    print("Implement this")
+    driver.execute()
 
 
 sched.start()
 
+
+def terminate():
+    sched.shutdown()
 

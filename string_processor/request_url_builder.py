@@ -1,15 +1,19 @@
 import configparser
-
-
+import logging
+import os
 config = configparser.ConfigParser()
-config.read('props.ini')
+path = os.path.abspath(os.path.dirname(__file__)) + os.sep+'props.ini'
+config.read(path)
 print(config.sections())
 
-def build_url():
+logging.basicConfig(level=logging.INFO)
+
+
+def get_url():
     return config['api']['url'] + config['api']['current_id']
 
 
-def update_props():
-    config['api']['current_id'] = str(int(config['api']['current_id']) + 1)
-    with open('props.ini', 'w') as conf_file:
+def update_props(id):
+    config['api']['current_id'] = str(id)
+    with open(path, 'w') as conf_file:
         config.write(conf_file)
