@@ -1,19 +1,34 @@
-import configparser
 import logging
-import os
-config = configparser.ConfigParser()
-path = os.path.abspath(os.path.dirname(__file__)) + os.sep+'props.ini'
-config.read(path)
-print(config.sections())
+import shelve
+
+api = {
+    'url': 'https://io-stabcode-tweet-bot.herokuapp.com/quotes/',
+    'current_id': 1,
+    'total_id': 298
+}
+
+db = shelve.open('props.db')
+
+try:
+    props = db['api']
+except KeyError:
+    db['api'] = api
+    props = db['api']
+finally:
+    db.close()
 
 logging.basicConfig(level=logging.INFO)
 
 
 def get_url():
-    return config['api']['url'] + config['api']['current_id']
+    return props['url'] + str(props['current_id'])
 
 
 def update_props(id):
-    config['api']['current_id'] = str(id)
-    with open(path, 'w') as conf_file:
-        config.write(conf_file)
+    with shelve.open('props.db') as db:
+        try:
+            data = db['api']
+            data['current_id'] = id
+            db['api'] = data
+        finally:
+            db.close()
