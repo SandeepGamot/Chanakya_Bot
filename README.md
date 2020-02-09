@@ -1,6 +1,7 @@
 
 [![HitCount](http://hits.dwyl.com/SandeepGamot/Ashtavakra_Gita_Bot.svg)](http://hits.dwyl.com/SandeepGamot/Ashtavakra_Gita_Bot)
 <img src="https://img.shields.io/badge/made%20with%20-python-brightgreen?style=flat-square.svg">
+<img src="https://heroku-badge.herokuapp.com/?app=io-stabcode-ashtavakra-bot">
 ![Twitter Follow](https://img.shields.io/twitter/follow/bot_gita?label=Follow%20The%20Bot)
 
 # Ashtavakra_Gita_Bot
