@@ -1,10 +1,14 @@
-from apscheduler.schedulers.blocking import BlockingScheduler
+from datetime import datetime
+from pytz import timezone
 import driver
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 sched = BlockingScheduler()
 
-#13:30 in usa(heroku server) == 00:00 in India
-@sched.scheduled_job('cron', hour=13, minute=30)
+tz = datetime.now(timezone('UTC')).astimezone(timezone('Asia/Kolkata'))
+
+
+@sched.scheduled_job('cron', hour=23, minute=59, second=30, timezone=tz)
 def notify():
     driver.execute()
 
