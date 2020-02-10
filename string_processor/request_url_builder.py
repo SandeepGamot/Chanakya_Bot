@@ -7,20 +7,22 @@ api = {
     'total_id': 298
 }
 
-db = shelve.open('props.db')
-
-try:
-    props = db['api']
-except KeyError:
-    db['api'] = api
-    props = db['api']
-finally:
-    db.close()
-
 logging.basicConfig(level=logging.INFO)
 
 
+def get_props():
+    with shelve.open('props.db') as db:
+        try:
+            props = db['api']
+        except KeyError:
+            db['api'] = api
+            props = db['api']
+        finally:
+            return props
+
+
 def get_url():
+    props = get_props()
     return props['url'] + str(props['current_id'])
 
 
@@ -30,5 +32,5 @@ def update_props(id):
             data = db['api']
             data['current_id'] = id
             db['api'] = data
-        finally:
-            db.close()
+        except KeyError:
+            pass
